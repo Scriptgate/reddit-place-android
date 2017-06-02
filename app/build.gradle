@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "net.scriptgate.softdev.android"
+        minSdkVersion 22
+        targetSdkVersion 23
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile 'net.sourceforge.streamsupport:streamsupport:1.5.3'
+    compile 'com.google.code.gson:gson:2.8.0'
+
+    testCompile 'org.assertj:assertj-core:2.7.0'
+    // Required for local unit tests (JUnit 4 framework)
+    testCompile 'junit:junit:4.12'
+
+    // Required for instrumented tests
+    androidTestCompile 'com.android.support:support-annotations:25.3.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+
+
+}
