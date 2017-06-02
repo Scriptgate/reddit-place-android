@@ -16,15 +16,15 @@ import static net.scriptgate.softdev.android.entity.cube.VertexDataBufferFactory
 
 public class IndexBufferObjectCreator {
 
-    private final Supplier<FloatBuffer> positionDataBufferSupplier;
+    private final Supplier<ShortBuffer> positionDataBufferSupplier;
     private final Supplier<ShortBuffer> textureDataBufferSupplier;
     private final IntFunction<IntBuffer> indexBufferSupplier;
     public final int numberOfCubes;
 
     public IndexBufferObjectCreator(final List<Event> events) {
-        positionDataBufferSupplier = new Supplier<FloatBuffer>() {
+        positionDataBufferSupplier = new Supplier<ShortBuffer>() {
             @Override
-            public FloatBuffer get() {return createPositionData(events);
+            public ShortBuffer get() {return createPositionData(events);
             }
         };
         textureDataBufferSupplier = new Supplier<ShortBuffer>() {
@@ -41,7 +41,7 @@ public class IndexBufferObjectCreator {
     }
 
     public IndexBufferObjectData createData(int indexOffset) {
-        FloatBuffer positionDataBuffer = positionDataBufferSupplier.get();
+        ShortBuffer positionDataBuffer = positionDataBufferSupplier.get();
         ShortBuffer textureDataBuffer = textureDataBufferSupplier.get();
         IntBuffer indexBuffer = indexBufferSupplier.apply(indexOffset);
         return new IndexBufferObjectData(positionDataBuffer, textureDataBuffer, indexBuffer, numberOfCubes);

@@ -57,7 +57,7 @@ public class FloatBufferHelper {
         };
     }
 
-    public static Consumer<Point3D> putPoint3DIn(final FloatBuffer buffer) {
+    public static Consumer<Point3D> putPoint3DIn(final ShortBuffer buffer) {
         return new Consumer<Point3D>() {
             @Override
             public void accept(Point3D point) {
@@ -71,9 +71,9 @@ public class FloatBufferHelper {
         buffer.put((short) point.y);
     }
 
-    public static void putIn(FloatBuffer buffer, Point3D point) {
-        buffer.put(point.x);
-        buffer.put(point.y);
-        buffer.put(point.z);
+    public static void putIn(ShortBuffer buffer, Point3D point) {
+        buffer.put((short) point.x);
+        buffer.put((short) point.y);
+        buffer.put((short) point.z);
     }
 }

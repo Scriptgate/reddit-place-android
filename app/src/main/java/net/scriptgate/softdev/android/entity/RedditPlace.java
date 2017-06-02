@@ -46,7 +46,11 @@ public class RedditPlace {
                 float z = readUInt32AsFloat(eventStream);
                 int color = readUInt32AsInt(eventStream);
 
-                events.add(new Event(new Point3D(x, z, y), color));
+                if(5*x > Short.MAX_VALUE || 5*z-5000 > Short.MAX_VALUE || 5*y > Short.MAX_VALUE) {
+                    System.err.println("Skipping event "+x+", "+y+", "+z+ " because it was out of bounds.");
+                    continue;
+                }
+                events.add(new Event(new Point3D(5*x, 5*z-5000, 5*y), color));
                 eventsRead++;
             }
         }

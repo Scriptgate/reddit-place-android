@@ -24,8 +24,8 @@ import static net.scriptgate.softdev.android.helper.FloatBufferHelper.putPoint3D
 
 public class VertexDataBufferFactory {
 
-    static FloatBuffer createPositionData(List<Event> events) {
-        FloatBuffer positionDataBuffer = allocatePositionDataBuffer(events.size());
+    static ShortBuffer createPositionData(List<Event> events) {
+        ShortBuffer positionDataBuffer = allocatePositionDataBuffer(events.size());
 
         stream(events)
                 .map(toPosition())
@@ -37,9 +37,9 @@ public class VertexDataBufferFactory {
     }
 
     private static Function<Point3D, Stream<Point3D>> positionToVertices() {
-        final float width = 1;
-        final float height = 0.2f;
-        final float depth = 1;
+        final float width = 5;
+        final float height = 1;
+        final float depth = 5;
 
         return new Function<Point3D, Stream<Point3D>>() {
             @Override

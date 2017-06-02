@@ -8,7 +8,7 @@ import static net.scriptgate.softdev.android.common.Point3D.scalarProduct;
 
 public class ZoomController {
 
-    private static final float MAX_ZOOM = 7;
+    private static final float MAX_ZOOM = 20;
     private static final float MIN_ZOOM = 0.01f;
 
     private float zoom = 1.0f;

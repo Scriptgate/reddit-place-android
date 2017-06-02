@@ -48,8 +48,8 @@ public class World {
         Point3D up = new Point3D(0.0f, 1.0f, 0.0f);
         viewMatrix = new ViewMatrix(eye, look, up);
 
-        float zoom = 7.0f;
-        projectionMatrix = new IsometricProjectionMatrix(30.0f, zoom);
+        float zoom = 15.0f;
+        projectionMatrix = new IsometricProjectionMatrix(10000.0f, zoom);
 
         mvpMatrix = new ModelViewProjectionMatrix();
     }
@@ -78,7 +78,7 @@ public class World {
     public void onSurfaceCreated() {
         viewMatrix.onSurfaceCreated();
         //Instead of moving the cubeRenderer up (centering the origin), we're simply manipulating the viewMatrix
-        viewMatrix.translate(new Point3D(-5.0f, 0.0f, -5.0f));
+        viewMatrix.translate(new Point3D(-7500.0f, 0, -7500.0f));
 
         int textureHandle = loadTexture(glSurfaceView.getContext(), R.drawable.colormap);
         cubeRenderer = new IndexBufferObjectCubeRenderer(modelMatrix, viewMatrix, projectionMatrix, mvpMatrix);

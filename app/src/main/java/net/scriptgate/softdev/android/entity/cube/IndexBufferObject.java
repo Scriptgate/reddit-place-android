@@ -56,7 +56,7 @@ public class IndexBufferObject {
         this.capacity = capacity;
 
         glBindBuffer(GL_ARRAY_BUFFER, vboBufferIndex);
-        int vertexDataSizeInBytes = getPositionDataSize(capacity) * BYTES_PER_FLOAT + getTextureDataSize(capacity) * BYTES_PER_SHORT;
+        int vertexDataSizeInBytes = (getPositionDataSize(capacity) + getTextureDataSize(capacity)) * BYTES_PER_SHORT;
         glBufferData(GL_ARRAY_BUFFER, vertexDataSizeInBytes, null, GL_DYNAMIC_DRAW);
         logData("Buffer Data", "vertex buffer", vertexDataSizeInBytes, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -79,11 +79,11 @@ public class IndexBufferObject {
             glBindBuffer(GL_ARRAY_BUFFER, vboBufferIndex);
 
             int positionAttribute = program.getHandle(POSITION);
-            glVertexAttribPointer(positionAttribute, FLOATS_PER_POSITION, GL_FLOAT, false, 0, 0);
+            glVertexAttribPointer(positionAttribute, FLOATS_PER_POSITION, GL_SHORT, false, 0, 0);
             glEnableVertexAttribArray(positionAttribute);
 
             int textureCoordinateAttribute = program.getHandle(TEXTURE_COORDINATE);
-            glVertexAttribPointer(textureCoordinateAttribute, FLOATS_PER_TEXTURE_COORDINATE, GL_SHORT, false, 0, (capacity * VERTICES_PER_CUBE) * FLOATS_PER_POSITION * BYTES_PER_FLOAT);
+            glVertexAttribPointer(textureCoordinateAttribute, FLOATS_PER_TEXTURE_COORDINATE, GL_SHORT, false, 0, (capacity * VERTICES_PER_CUBE) * FLOATS_PER_POSITION * BYTES_PER_SHORT);
             glEnableVertexAttribArray(textureCoordinateAttribute);
 
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboBufferIndex);
@@ -94,8 +94,8 @@ public class IndexBufferObject {
         }
     }
 
-    static FloatBuffer allocatePositionDataBuffer(int numberOfCubes) {
-        return allocateFloatBuffer(getPositionDataSize(numberOfCubes));
+    static ShortBuffer allocatePositionDataBuffer(int numberOfCubes) {
+        return allocateShortBuffer(getPositionDataSize(numberOfCubes));
     }
 
     static ShortBuffer allocateTextureDataBuffer(int numberOfCubes) {
@@ -137,13 +137,13 @@ public class IndexBufferObject {
         IndexBufferObjectData data = creator.createData(count * VERTICES_PER_CUBE);
 
         glBindBuffer(GL_ARRAY_BUFFER, vboBufferIndex);
-        int positionDataSizeInBytes = data.positionDataBuffer.capacity() * BYTES_PER_FLOAT;
-        int positionDataOffsetInBytes = count * VERTICES_PER_CUBE * FLOATS_PER_POSITION * BYTES_PER_FLOAT;
+        int positionDataSizeInBytes = data.positionDataBuffer.capacity() * BYTES_PER_SHORT;
+        int positionDataOffsetInBytes = count * VERTICES_PER_CUBE * FLOATS_PER_POSITION * BYTES_PER_SHORT;
         logData("Buffer Sub Data", "position data buffer", positionDataSizeInBytes, positionDataOffsetInBytes);
         glBufferSubData(GL_ARRAY_BUFFER, positionDataOffsetInBytes, positionDataSizeInBytes, data.positionDataBuffer);
 
         int textureDataSizeInBytes = data.textureDataBuffer.capacity() * BYTES_PER_SHORT;
-        int totalPositionDataSizeInBytes = capacity * VERTICES_PER_CUBE * FLOATS_PER_POSITION * BYTES_PER_FLOAT;
+        int totalPositionDataSizeInBytes = capacity * VERTICES_PER_CUBE * FLOATS_PER_POSITION * BYTES_PER_SHORT;
         int textureDataOffsetInBytes = totalPositionDataSizeInBytes + count * VERTICES_PER_CUBE * FLOATS_PER_TEXTURE_COORDINATE * BYTES_PER_SHORT;
         logData("Buffer Sub Data", "texture data buffer", textureDataSizeInBytes, textureDataOffsetInBytes);
         glBufferSubData(GL_ARRAY_BUFFER, textureDataOffsetInBytes, textureDataSizeInBytes, data.textureDataBuffer);
@@ -163,7 +163,7 @@ public class IndexBufferObject {
         data.release();
 
         long elapsedTimeMillis = (System.currentTimeMillis() - start);
-        int totalDataInBytes = (data.positionDataBuffer.capacity() + data.textureDataBuffer.capacity()) * BYTES_PER_FLOAT + data.indexBuffer.capacity() * BYTES_PER_INT;
+        int totalDataInBytes = (data.positionDataBuffer.capacity() + data.textureDataBuffer.capacity()) * BYTES_PER_SHORT + data.indexBuffer.capacity() * BYTES_PER_INT;
         Log.d(TAG, "IBO transfer from CPU to GPU for " + data.indexBuffer.capacity() + " events (" + totalDataInBytes + " bytes) took " + elapsedTimeMillis + " ms.");
         Log.d(TAG, "IBO status: ");
         Log.d(TAG, "\t- capacity: " + count + "/" + capacity);
