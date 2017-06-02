@@ -2,6 +2,7 @@ package net.scriptgate.softdev.android.entity;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import net.scriptgate.softdev.android.common.Point3D;
 
@@ -15,6 +16,11 @@ import static java.nio.ByteOrder.LITTLE_ENDIAN;
 
 public class RedditPlace {
 
+    /**
+     * Used for debug logs. max 23 characters
+     */
+    private static final String TAG = "RedditPlace";
+
     private static final long TOTAL_NUMBER_OF_EVENTS = 16_559_897;
 
     private Context activityContext;
@@ -24,14 +30,14 @@ public class RedditPlace {
     }
 
     public List<Event> readEvents(long from, long limit) throws IOException {
-        System.out.println("Loading binary event data...");
+        Log.d(TAG, "Loading binary event data...");
 
         long eventsRead = 0;
 
         List<Event> events = new ArrayList<>();
 
         try (InputStream eventStream = activityContext.getAssets().open("3d_diffs.bin")) {
-//            System.out.println("Skipping " + from + " events");
+            Log.d(TAG, "Skipping " + from + " events");
             eventStream.skip(from * 16);
             while (eventStream.available() != 0 && from + eventsRead < TOTAL_NUMBER_OF_EVENTS && eventsRead < limit) {
 

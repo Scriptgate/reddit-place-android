@@ -17,6 +17,7 @@ package net.scriptgate.softdev.android;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import net.scriptgate.softdev.android.common.Color;
 import net.scriptgate.softdev.android.common.Point2D;
@@ -44,6 +45,11 @@ import static net.scriptgate.softdev.android.common.Color.*;
  * </ul>
  */
 public class IsometricRenderer implements GLSurfaceView.Renderer {
+
+    /**
+     * Used for debug logs. max 23 characters
+     */
+    private static final String TAG = "IsometricRenderer";
 
     private static final Color BACKGROUND_COLOR = WHITE;
 
@@ -96,11 +102,11 @@ public class IsometricRenderer implements GLSurfaceView.Renderer {
         final long EVENTS_PER_BATCH = 100;
         if(this.spawnCubes) {
             try {
-//                long start = System.currentTimeMillis();
+                long start = System.currentTimeMillis();
                 //TODO: replay more events
                 List<Event> events = redditPlace.readEvents(numberOfReplayedEvents, EVENTS_PER_BATCH);
-//                long elapsedTimeMillis = System.currentTimeMillis() - start;
-//                System.out.println("Loading events took " + elapsedTimeMillis + " ms.");
+                long elapsedTimeMillis = System.currentTimeMillis() - start;
+                Log.d(TAG, "Loading events took " + elapsedTimeMillis + " ms.");
                 if (world.hasRoom(events.size())) {
                     world.generateCubes(events);
                     numberOfReplayedEvents += EVENTS_PER_BATCH;
