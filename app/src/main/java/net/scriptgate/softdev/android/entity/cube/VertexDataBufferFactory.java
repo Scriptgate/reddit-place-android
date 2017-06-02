@@ -6,6 +6,7 @@ import net.scriptgate.softdev.android.common.Point3D;
 import net.scriptgate.softdev.android.entity.Event;
 
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 import java.util.List;
 
 import java8.util.function.Function;
@@ -57,8 +58,8 @@ public class VertexDataBufferFactory {
         };
     }
 
-    static FloatBuffer createTextureData(List<Event> events) {
-        final FloatBuffer textureDataBuffer = allocateTextureDataBuffer(events.size());
+    static ShortBuffer createTextureData(List<Event> events) {
+        final ShortBuffer textureDataBuffer = allocateTextureDataBuffer(events.size());
 
         stream(events)
                 .mapToInt(toColorIndex())

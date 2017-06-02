@@ -48,7 +48,7 @@ public class FloatBufferHelper {
         return buffer;
     }
 
-    public static Consumer<Point2D> putPoint2DIn(final FloatBuffer buffer) {
+    public static Consumer<Point2D> putPoint2DIn(final ShortBuffer buffer) {
         return new Consumer<Point2D>() {
             @Override
             public void accept(Point2D point) {
@@ -66,9 +66,9 @@ public class FloatBufferHelper {
         };
     }
 
-    public static void putIn(FloatBuffer buffer, Point2D point) {
-        buffer.put(point.x);
-        buffer.put(point.y);
+    public static void putIn(ShortBuffer buffer, Point2D point) {
+        buffer.put((short) point.x);
+        buffer.put((short) point.y);
     }
 
     public static void putIn(FloatBuffer buffer, Point3D point) {

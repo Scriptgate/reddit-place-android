@@ -8,7 +8,7 @@ varying vec2 v_TexCoordinate;   // This will be passed into the fragment shader.
 void main() {
 
 	// Pass through the texture coordinate.
-	v_TexCoordinate = a_TexCoordinate;
+	v_TexCoordinate = a_TexCoordinate * 0.01;
 
 
 	// gl_Position is a special variable used to store the final position.

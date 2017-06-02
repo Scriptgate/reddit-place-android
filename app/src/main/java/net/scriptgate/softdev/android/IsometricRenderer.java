@@ -99,7 +99,7 @@ public class IsometricRenderer implements GLSurfaceView.Renderer {
         glDisable(GL_BLEND);
 
 
-        final long EVENTS_PER_BATCH = 100;
+        final long EVENTS_PER_BATCH = 1000;
         if(this.spawnCubes) {
             try {
                 long start = System.currentTimeMillis();
